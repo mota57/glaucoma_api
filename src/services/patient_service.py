@@ -22,6 +22,8 @@ def get_patients_by_doctor_id(db:Session, doctor_id:int, skip: int = 0, limit: i
 def create_patient(db:Session,  patient_dto: dto.PatientCreate):
     db_user = find_by_email(db, email=patient_dto.email)
     if db_user:
+        print(db_user.user_account_id)
+        print(db_user.email + ' -- dto:'+patient_dto.email)
         raise HTTPException(status_code=400, detail="Email already registered")
     patient = UserAccount()
     patient.first_name = patient_dto.first_name
@@ -29,6 +31,7 @@ def create_patient(db:Session,  patient_dto: dto.PatientCreate):
     patient.patient_doctor_id = patient_dto.patient_doctor_id
     patient.identification_number = patient_dto.identification_number
     patient.birthday = patient_dto.birthday
+    patient.email = patient_dto.email
     patient.user_type_id = UserTypeValue.Patient
     db.add(patient)
     db.commit()

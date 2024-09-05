@@ -14,12 +14,10 @@ router = APIRouter(
 @router.get("/list/{doctor_id}")
 def list(db: SessionDependency, doctor_id:int= 0, skip: int = 0, limit: int = 100):
     result = patient_service.get_patients_by_doctor_id(db=db, doctor_id=doctor_id, skip=skip, limit=limit)
-    print('============================')
-    print(result)
-    return result or []
+    return result
 
 
-@router.post("/create")
+@router.post("/create", response_model=dto.PatientUpsertResponseDto)
 def create(db: SessionDependency, patient_dto: dto.PatientCreate):
     return patient_service.create_patient(db=db, patient_dto=patient_dto)
 
