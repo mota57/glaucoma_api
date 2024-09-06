@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel
 from datetime import datetime, date, time
 
@@ -87,3 +88,28 @@ class PatientUpdate(BaseModel):
     email:str
     identification_number:str
     birthday:date #In requests and responses will be represented as a str in ISO 8601 format, like: 2008-09-15.
+
+
+# Pydantic models
+class PatientFileCreate(BaseModel):
+    user_account_id: int
+    file: Optional[str] = None
+    fileName: Optional[str] = None
+
+class PatientFileOut(BaseModel):
+    patient_file_id: int
+    file_status_id: int
+    user_account_id: int
+    message: Optional[str] = None
+    path: Optional[str] = None
+    prediction_value: Optional[int] = None
+
+    class Config:
+        from_attributes = True
+
+class FileProcessDTO:
+    success:bool
+    message:str
+    prediction:str
+    file_name:str
+    path:str
