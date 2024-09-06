@@ -29,12 +29,14 @@ def get_db():
         db.close()
 
 
-# oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 # async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
-async def get_current_user():
-    user = fake_decode_token(token)
-    return user
+# async def get_current_user():
+#     user = fake_decode_token(token)
+#     return user
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 SessionDependency = Annotated[Session, Depends(get_db)]
 UserSessionModelDep = Annotated[UserSessionModel, Depends(get_db)]
+Oauth2Dependency = Annotated[str, Depends(oauth2_scheme)]

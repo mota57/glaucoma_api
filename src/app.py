@@ -1,7 +1,7 @@
 from fastapi import Depends, FastAPI
 from fastapi.routing import APIRoute
 # routers
-from src.router import patient_controller
+from src.router import patient_controller, user_controller
 # database
 from .database import engine, Base
 # cors
@@ -33,6 +33,7 @@ allow_headers=["*"], # Allows all headers
 
 # attach routers
 app.include_router(patient_controller.router)
+app.include_router(user_controller.router)
 # app.include_router(database_controller.router)
 # app.include_router(items.router)
 

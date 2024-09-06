@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Date
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Date, DateTime
 from sqlalchemy.orm import relationship
 
 from typing import List
@@ -10,7 +10,7 @@ from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
 
 from .database import Base, engine
-
+import datetime
 
 # class User(Base):
 #     __tablename__ = "users"
@@ -44,17 +44,14 @@ class UserType(Base):
 class UserAccount(Base):
     __tablename__ = "user_account"
     user_account_id: Mapped[int] = mapped_column(primary_key=True)
-    first_name: Mapped[str] = mapped_column(String(30))
-    last_name: Mapped[str] = mapped_column(String(30))
-    email: Mapped[str] = mapped_column(String(30), unique=True, index=True)
-    birthday:Mapped[Date] = mapped_column(Date)
-    patient_doctor_id: Mapped[Optional[int]] = mapped_column(Integer())
+    first_name: Mapped[str] = mapped_column(String(30), nullable=True)
+    last_name: Mapped[str] = mapped_column(String(30), nullable=True)
+    email: Mapped[str] = mapped_column(String(30), index=True)
+    password: Mapped[str] = mapped_column(String(200), nullable=True)
+    birthday:Mapped[Date] = mapped_column(Date, nullable=True)
+    patient_doctor_id: Mapped[Optional[int]] = mapped_column(Integer(), nullable=True)
     user_type_id: Mapped[int] = mapped_column(ForeignKey("user_type.user_type_id"))
-    identification_number: Mapped[Optional[str]] = mapped_column(String(100))
-    # relation 1 to many
-    # email_addresses: Mapped[List["EmailAddress"]] = relationship(
-    #     back_populates="user_account", cascade="all, delete-orphan"
-    # )
+    identification_number: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     patient_files: Mapped[List["PatientFile"]] = relationship(
         back_populates="user_account", cascade="all, delete-orphan"
     )
@@ -82,6 +79,14 @@ class PatientFile(Base):
     message: Mapped[Optional[str]] = mapped_column(String(3000))
     path: Mapped[Optional[str]] = mapped_column(String(200))
     prediction_value: Mapped[Optional[int]] = mapped_column(Integer())
+
+class TokenTable(Base):
+    __tablename__ = "token"
+    user_id = Column(Integer)
+    access_toke = Column(String(450), primary_key=True)
+    refresh_toke = Column(String(450),nullable=False)
+    status = Column(Boolean)
+    created_date = Column(DateTime, default=datetime.datetime.now)
 
 
 # class ValueLoader:
