@@ -47,11 +47,16 @@ class UserSessionModel:
 
 class PatientDto(BaseModel):
     user_account_id: int
+    email:str
     first_name : str
     last_name: str
     patient_doctor_id: int
     user_type_id: int
     identification_number:str
+    birthday: date
+
+    class Config:
+        from_attributes = True
 
 
 class PatientUpsertResponseDto(BaseModel):
@@ -81,3 +86,4 @@ class PatientUpdate(BaseModel):
     last_name:str
     email:str
     identification_number:str
+    birthday:date #In requests and responses will be represented as a str in ISO 8601 format, like: 2008-09-15.

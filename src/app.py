@@ -21,15 +21,15 @@ app = FastAPI(
     generate_unique_id_function=custom_generate_unique_id)
 
 # set cors
-origins = [ "*" ]
 
 app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+CORSMiddleware,
+allow_origins=["*"], # Allows all origins
+allow_credentials=True,
+allow_methods=["*"], # Allows all methods
+allow_headers=["*"], # Allows all headers
 )
+
 
 # attach routers
 app.include_router(patient_controller.router)

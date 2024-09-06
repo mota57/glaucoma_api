@@ -46,6 +46,8 @@ def update_patient(db:Session, patient_id:int, patient_dto: dto.PatientUpdate):
         .update({
             'first_name': patient_dto.first_name,
             'last_name': patient_dto.last_name,
-            'identification_number': patient_dto.identification_numbe,
+            'identification_number': patient_dto.identification_number,
+            'email': patient_dto.email,
+            'birthday': patient_dto.birthday,
         })
     db.commit()
