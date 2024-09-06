@@ -83,15 +83,6 @@ class PatientFile(Base):
     path: Mapped[Optional[str]] = mapped_column(String(200))
     prediction_value: Mapped[Optional[int]] = mapped_column(Integer())
 
-# class EmailAddress(Base):
-#     __tablename__ = "email_address"
-#     address_id: Mapped[int] = mapped_column(primary_key=True)
-#     email: Mapped[str]
-#     user_account_id: Mapped[int] = mapped_column(ForeignKey("user_account.user_account_id"))
-#     user_account: Mapped["UserAccount"] = relationship(back_populates="email_addresses")
-#     def __repr__(self) -> str:
-#         return f"Address(id={self.address_id!r}, email_address={self.email_address!r})"
-
 
 # class ValueLoader:
 #     def __init__(self, table : str, prop: str, value :str):

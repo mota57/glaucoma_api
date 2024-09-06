@@ -1,6 +1,6 @@
-from typing import Optional
 from pydantic import BaseModel
-from datetime import datetime, date, time
+from datetime import date
+
 
 ## item
 
@@ -41,19 +41,18 @@ from datetime import datetime, date, time
 
 
 class UserSessionModel:
-    user_id:int
-    email:str
-
+    user_id: int
+    email: str
 
 
 class PatientDto(BaseModel):
     user_account_id: int
-    email:str
-    first_name : str
+    email: str
+    first_name: str
     last_name: str
     patient_doctor_id: int
     user_type_id: int
-    identification_number:str
+    identification_number: str
     birthday: date
 
     class Config:
@@ -62,54 +61,56 @@ class PatientDto(BaseModel):
 
 class PatientUpsertResponseDto(BaseModel):
     user_account_id: int
-    first_name : str
+    first_name: str
     last_name: str
     patient_doctor_id: int
     user_type_id: int
-    identification_number:str
+    identification_number: str
 
     class Config:
         from_attributes = True
 
 
-
 class PatientCreate(BaseModel):
-    patient_doctor_id:int
-    first_name:str
-    last_name:str
-    email:str
-    identification_number:str
-    birthday:date #In requests and responses will be represented as a str in ISO 8601 format, like: 2008-09-15.
+    patient_doctor_id: int
+    first_name: str
+    last_name: str
+    email: str
+    identification_number: str
+    birthday: date  # In requests and responses will be represented as a str in ISO 8601 format, like: 2008-09-15.
+
 
 class PatientUpdate(BaseModel):
-    user_account_id:int #pk
-    first_name:str
-    last_name:str
-    email:str
-    identification_number:str
-    birthday:date #In requests and responses will be represented as a str in ISO 8601 format, like: 2008-09-15.
+    user_account_id: int  # pk
+    first_name: str
+    last_name: str
+    email: str
+    identification_number: str
+    birthday: date  # In requests and responses will be represented as a str in ISO 8601 format, like: 2008-09-15.
 
 
 # Pydantic models
 class PatientFileCreate(BaseModel):
-    user_account_id: int
-    file: Optional[str] = None
-    fileName: Optional[str] = None
+    user_account_id:int
+    fileName:str
+    file: str
 
-class PatientFileOut(BaseModel):
-    patient_file_id: int
-    file_status_id: int
-    user_account_id: int
-    message: Optional[str] = None
-    path: Optional[str] = None
-    prediction_value: Optional[int] = None
+class PatientFileViewDto(BaseModel):
+    patient_file_id:int
+    file_status_id:int
+    user_account_id:int
+    message:str
+    path:str
+    prediction_value:int
 
     class Config:
         from_attributes = True
 
+
 class FileProcessDTO:
-    success:bool
-    message:str
-    prediction:str
-    file_name:str
-    path:str
+    file_status_id:int
+    success: bool
+    message: str
+    prediction: str
+    file_name: str
+    path: str
